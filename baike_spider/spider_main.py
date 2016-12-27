@@ -25,15 +25,15 @@ class SpiderMain(object):
             try:
                 '''获取在爬取的url'''
                 new_url = self.urls.get_new_url()
-                print("craw %d : %s" %(count,new_url))
+                # print("craw %d : %s" %(count,new_url))
 
                 '''启动下载器下载这个页面，结果存在html_cont中'''
-                html_cont = self.downloader.download()
+                html_cont = self.downloader.download(new_url)
 
                 '''下载好的页面，我们调用解析器来解析这个页面的数据，得到新的url列表和新的数据'''
                 new_urls , new_data = self.parser.parse(new_url , html_cont)
                 '''新的url列表'''
-                self.urls.add_new_urls(new_url)
+                self.urls.add_new_urls(new_urls)
 
                 '''收集数据'''
                 self.outputer.collect_data(new_data)
@@ -48,7 +48,7 @@ class SpiderMain(object):
                 count +=1
                 print(new_url)
 
-        self.outputer.output_html()
+        self.outputer.output_html() #内容输出至文件
 
 if __name__ == "__main__":
     #设置入口url

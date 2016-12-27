@@ -1,15 +1,16 @@
 import urllib
 
 
+from urllib import request
+
+
 class HtmlDownloader(object):
-
-    def download(self , url):
-
+    # 获取页面HTML代码
+    def download(self, url):
         if url is None:
-            return
-
-        response = urllib.urllib.urlopen(url)
-
-        if response.getcode() !=200:
-            return
-        return  response.read().encode('utf-8')
+            return None
+        response = request.urlopen(url)
+        if response.getcode() != 200:
+            return None
+        else:
+            return response.read().decode('utf8')
